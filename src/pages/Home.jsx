@@ -4,10 +4,12 @@ import reactLogo from "../assets/react.svg";
 import { useEffect, useState } from "react";
 import { getProducts } from "../services/api";
 import Navbar from "../components/ui/navbar";
+import { useNavigate } from "react-router-dom";
 
 export default function Home() {
     const [hoveredFeature, setHoveredFeature] = useState(null);
     const [ products, setProducts ] = useState(null)
+    const navigate = useNavigate()
 
     const features = [
         {
@@ -45,7 +47,7 @@ export default function Home() {
                 title: product.name,
                 description: product.description,
                 buttonText: "View Product",
-                buttonOnClick: () => alert(`Clicked on ${product.name}`),
+                buttonOnClick: () => navigate(`/products/${product.id}`),
             }))
             setProducts(mappedProducts)
         }

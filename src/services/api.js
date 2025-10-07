@@ -35,7 +35,21 @@ export async function verifyEmail(token) {
 
 export async function getProducts() {
     const { data } = await apiClient.get("/products")
-    console.log('product Data :', data);
+
+    return data
+}
+
+export async function getProductByID(id) {
+    const { data } = await apiClient.get(`/products/${id}`)
+
+    return data
+}
+
+export async function buyNow(id, quantity) {
+    const { data } = await apiClient.post('orders/buy_now/', {
+        "product_id": id,
+        "quantity": quantity
+    })
 
     return data
 }
