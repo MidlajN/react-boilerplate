@@ -3,6 +3,7 @@ import ProtectedRoute from "./ProtectedRoute";
 import Login from "../pages/Login";
 import SignUp from "../pages/SignUp";
 import VerifyEmail from "../pages/VerifyEmail";
+import Home from "../pages/Home";
 
 const AppRoutes = () => {
     return (
@@ -13,7 +14,7 @@ const AppRoutes = () => {
                 <Route path="/verify-email" element={<VerifyEmail/>} />
 
                 <Route element={<ProtectedRoute />}>
-                    <Route path="/" element={<Login/>} />
+                    <Route path="/" element={<Home/>} />
                     <Route path="/dashboard" element={<Login/>}  />
                 </Route>
             </Routes>

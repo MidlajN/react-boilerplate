@@ -1,10 +1,13 @@
 // import { Children } from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Navigate, Outlet } from "react-router";
-
+import { useAuth } from "../context/AuthContext";
 const ProtectedRoute = ({ children }) => {
-    // const { accessToken } = useProvider();
-    const [ accessToken, setAccessToken ] = useState()
+    const { accessToken } = useAuth();
+
+    useEffect(() => {
+        console.log(accessToken)
+    }, [])
 
     if (!accessToken) {
         return <Navigate to={'/login'} replace />

@@ -1,5 +1,4 @@
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 
 const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:8000/api/v1";
 
@@ -48,6 +47,8 @@ apiClient.interceptors.response.use(
                 });
 
                 const newAccessToken = res.data.access;
+                localStorage.setItem('access_token', newAccessToken);
+                localStorage.setItem('refresh_token', res.data.refresh);
 
                 apiClient.defaults.headers.Authorization = `Bearer ${newAccessToken}`;
                 refreshQueue.forEach((p) => p.resolve(newAccessToken))

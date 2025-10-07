@@ -1,8 +1,6 @@
 // src/pages/Login.jsx
 import { useNavigate } from "react-router-dom";
 import SignUpForm from "../components/forms/SignupForm";
-import { Card, CardBody, CardFooter, CardHeader }  from '../components/ui/Card'
-import { Button } from "../components/ui/button";
 import { useAuth } from "../context/AuthContext";
 
 export default function SignUp() {

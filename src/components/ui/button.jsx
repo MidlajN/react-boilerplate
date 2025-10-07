@@ -1,4 +1,4 @@
-import { cn } from "../../utils/cn"
+import cn from "../../utils/cn"
 
 export function Button({ variant = "primary", size = "md", className, ...props }) {
   const base = "inline-flex items-center justify-center font-medium rounded-md"

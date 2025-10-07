@@ -1,22 +1,17 @@
 // src/pages/Login.jsx
 import LoginForm from "../components/forms/LoginForm";
-// import { useAuth } from "../context/AuthContext";
-import { Card, CardBody, CardFooter, CardHeader }  from '../components/ui/Card'
-import { Button } from "../components/ui/button";
+import { useAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
+
 
 export default function Login() {
-//   const { login } = useAuth();
+  const { logIn, loginWithGoogle } = useAuth();
+  const navigate = useNavigate();
 
   const handleLogin = async (data) => {
     try {
-      const response = await fetch("http://127.0.0.1:8000/api/v1/auth/login/", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
-      const result = await response.json();
-    //   if (response.ok) login(result.user);
-    //   else alert(result.detail || "Login failed");
+      await logIn(data.email, data.password)
+      navigate('/')
     } catch {
       alert("Network error");
     }
@@ -24,16 +19,11 @@ export default function Login() {
 
   const handleGoogleLogin = async (credentialResponse) => {
     try {
-      const response = await fetch("http://127.0.0.1:8000/api/v1/auth/google-login/", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ token: credentialResponse.credential }),
-      });
-      const result = await response.json();
-    //   if (response.ok) login(result.user);
-    //   else alert(result.detail || "Google login failed");
-    } catch {
-      alert("Network error");
+      await loginWithGoogle(credentialResponse)
+      navigate('/');
+    } catch (err) {
+      console.error("Login failed:", err);
+      alert("Login with Google failed. Please check your credentials.");
     }
   };
 
