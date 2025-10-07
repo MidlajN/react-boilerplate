@@ -1,40 +1,31 @@
 // src/pages/Login.jsx
-import LoginForm from "../components/forms/LoginForm";
+import { useNavigate } from "react-router-dom";
 import SignUpForm from "../components/forms/SignupForm";
-// import { useAuth } from "../context/AuthContext";
 import { Card, CardBody, CardFooter, CardHeader }  from '../components/ui/Card'
 import { Button } from "../components/ui/button";
+import { useAuth } from "../context/AuthContext";
 
 export default function SignUp() {
-//   const { login } = useAuth();
+  const { signUp, loginWithGoogle } = useAuth();
+  const navigate = useNavigate();
 
-  const handleLogin = async (data) => {
+  const handleSignUp = async (data) => {
     try {
-      const response = await fetch("http://127.0.0.1:8000/api/v1/auth/login/", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
-      const result = await response.json();
-    //   if (response.ok) login(result.user);
-    //   else alert(result.detail || "Login failed");
-    } catch {
-      alert("Network error");
+      await signUp(data.email, data.password1, data.password2);
+      navigate('/')
+    } catch (err) {
+      console.error("Login failed:", err);
+      alert("Login failed. Please check your credentials.");
     }
   };
 
   const handleGoogleLogin = async (credentialResponse) => {
     try {
-      const response = await fetch("http://127.0.0.1:8000/api/v1/auth/google-login/", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ token: credentialResponse.credential }),
-      });
-      const result = await response.json();
-    //   if (response.ok) login(result.user);
-    //   else alert(result.detail || "Google login failed");
-    } catch {
-      alert("Network error");
+      await loginWithGoogle(credentialResponse)
+      navigate('/');
+    } catch (err) {
+      console.error("Login failed:", err);
+      alert("Login with Google failed. Please check your credentials.");
     }
   };
 
@@ -45,7 +36,7 @@ export default function SignUp() {
                     <h1 className="text-2xl font-semibold text-gray-800">Create Account</h1>
                     <p className="text-sm text-gray-500">Sign up to get started</p>
                 </div>
-                <SignUpForm onSubmit={ handleLogin } onGoogleLogin={ handleGoogleLogin } />
+                <SignUpForm onSubmit={ handleSignUp } onGoogleLogin={ handleGoogleLogin } />
                 <div className="text-center text-sm text-gray-500">
                     Already have an account?{" "}
                     <a href="/login" className="text-blue-600 hover:underline">Sign In</a>

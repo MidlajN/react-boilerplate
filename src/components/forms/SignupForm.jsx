@@ -5,7 +5,7 @@ import { GoogleLogin } from "@react-oauth/google";
 
 export default function SignUpForm({ onSubmit }) {
     const [formData, setFormData] = useState({ email: "", password1: "", password2: "" });
-    const [loading, setLoading] = useState(false);
+    const [ loading, setLoading ] = useState(false);
     const [ passwordMatched, setPasswordMatched ] = useState(true)
 
     useEffect(() => {
@@ -15,8 +15,6 @@ export default function SignUpForm({ onSubmit }) {
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
-
-
 
     const handleSubmit = async (e) => {
         e.preventDefault();
